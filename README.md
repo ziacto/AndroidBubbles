@@ -5,11 +5,11 @@ Android bubbles recreates the chat bubbles as implemented by Facebook. It focuse
 
 (Higher quality version can be found [here](https://www.youtube.com/watch?v=E2966AjH6ew))
 
-# Usage
+## Usage
 
 You can start using Android Bubbles in 3 simple steps.
 
-## 1. Add project dependency
+### 1. Add project dependency
 
 First, add Android Bubbles to your project dependencies.
 
@@ -28,7 +28,7 @@ dependencies {
 }
 ```
 
-## 2. Create a BubblesManager
+### 2. Create a BubblesManager
 
 Create a BubblesManager using a Context.
 ```java
@@ -50,7 +50,7 @@ After you create it, you can also retrieve it with
 bubblesManager = BubblesManager.getManager();
 ```
 
-## 3. Add Bubble
+### 3. Add Bubble
 
 Add a bubble to BubblesManager
 ```java
@@ -61,9 +61,9 @@ bubblesManager.addBubble(bubble);
 ```
 You now have your first Android Bubble!
 
-# Other methods
+## Other methods
 
-## Handle Bubble taps
+### Handle Bubble taps
 
 You can handle Bubble taps just as you would with a Button.
 
@@ -82,14 +82,14 @@ public void onTapConfirmed()
 public void onDoubleTap()
 ```
 
-## Remove Bubble
+### Remove Bubble
 
 You can remove Bubbles programatically with
 
 ```java
 bubblesManager.removeBubble(bubble);
 ```
-## Create Bubbles easily
+### Create Bubbles easily
 
 You can save a few lines of code by using Bubble's convenience contructors.
 ```java
@@ -99,14 +99,14 @@ new Bubble(resourceId);
 new Bubble(imageUri);
 ```
 
-## Set Bubble's image size
+### Set Bubble's image size
 
 You can customize the size of the Bubble by using
 ```java
 bubble.setImageViewSize(width, height);
 ```
 
-## Check if BubblesManager exists
+### Check if BubblesManager exists
 
 To avoid problems with activity recreations, you can wrap your BubblesManager creation with
 
@@ -118,7 +118,7 @@ if(BubblesManager.exists()) {
 }
 ```
 
-## Handle screen rotations
+### Handle screen rotations
 
 Screen rotations must be handled by the Activity that implements BubblesManager. That is made simple with
 
@@ -126,11 +126,15 @@ Screen rotations must be handled by the Activity that implements BubblesManager.
 bubblesManager.updateConfiguration();
 ```
 
-# Share your project!
+## Highly customizable
+
+You can easily customize Android Bubble's feel by tweaking the fields in BubblesProperties.
+
+## Share your project!
 
 Implemented Android Bubbles for your project? Send it to rodrigo.dl.pontes@gmail.com and I'll share it here!
 
-# License
+## License
 
 Copyright 2016 Rodrigo Pontes
 
