@@ -71,11 +71,19 @@ You can handle Bubble taps just as you would with a Button.
 bubble.setBubbleOnTapListener(new BubbleOnTapListener {
 
   @Override
-  public void onTap() {
+  public void onTap(Bubble.BubblePosition bubblePosition) {
     Log.d("Bubbles", "Hello World!");
   }
 }
 ```
+
+The Bubble's position can be retrieved from
+
+```java
+bubblePosition.x
+bubblePosition.y
+```
+
 You can also implement
 ```java
 public void onTapConfirmed()
