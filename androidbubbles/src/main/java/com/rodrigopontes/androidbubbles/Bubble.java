@@ -96,4 +96,14 @@ public class Bubble extends BubbleBase {
 	protected BubbleOnTapListener getBubbleOnClickListener() {
 		return bubbleOnClickListener;
 	}
+
+	public static class BubblePosition {
+		public int x;
+		public int y;
+
+		public BubblePosition(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+	}
 }

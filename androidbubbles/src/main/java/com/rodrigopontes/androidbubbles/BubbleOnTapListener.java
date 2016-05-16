@@ -18,9 +18,9 @@ package com.rodrigopontes.androidbubbles;
 
 public abstract class BubbleOnTapListener {
 
-	public abstract void onTap();
+	public abstract void onTap(Bubble.BubblePosition bubblePosition);
 
-	public void onTapConfirmed() {}
+	public void onTapConfirmed(Bubble.BubblePosition bubblePosition) {}
 
-	public void onDoubleTap() {}
+	public void onDoubleTap(Bubble.BubblePosition bubblePosition) {}
 }

@@ -533,7 +533,7 @@ public class BubblesManager {
 			@Override
 			public boolean onSingleTapUp(MotionEvent e) {
 				if(bubble.getBubbleOnClickListener() != null) {
-					bubble.getBubbleOnClickListener().onTap();
+					bubble.getBubbleOnClickListener().onTap(new Bubble.BubblePosition(params.x, params.y));
 				}
 				return super.onSingleTapUp(e);
 			}
@@ -541,7 +541,7 @@ public class BubblesManager {
 			@Override
 			public boolean onSingleTapConfirmed(MotionEvent e) {
 				if(bubble.getBubbleOnClickListener() != null) {
-					bubble.getBubbleOnClickListener().onTapConfirmed();
+					bubble.getBubbleOnClickListener().onTapConfirmed(new Bubble.BubblePosition(params.x, params.y));
 				}
 				return super.onSingleTapConfirmed(e);
 			}
@@ -549,7 +549,7 @@ public class BubblesManager {
 			@Override
 			public boolean onDoubleTap(MotionEvent e) {
 				if(bubble.getBubbleOnClickListener() != null) {
-					bubble.getBubbleOnClickListener().onDoubleTap();
+					bubble.getBubbleOnClickListener().onDoubleTap(new Bubble.BubblePosition(params.x, params.y));
 				}
 				return super.onDoubleTap(e);
 			}

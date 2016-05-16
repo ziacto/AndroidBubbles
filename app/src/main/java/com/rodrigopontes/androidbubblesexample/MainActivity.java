@@ -19,9 +19,11 @@ package com.rodrigopontes.androidbubblesexample;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.rodrigopontes.androidbubbles.Bubble;
+import com.rodrigopontes.androidbubbles.BubbleOnTapListener;
 import com.rodrigopontes.androidbubbles.BubblesManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +44,24 @@ public class MainActivity extends AppCompatActivity {
 
 	// Action for "Add Bubble" button
 	public void onAddBubble(View view) {
-		BubblesManager.getManager().addBubble(new Bubble(R.drawable.example_bubble));
+		Bubble bubble = new Bubble(R.drawable.example_bubble);
+		// Bubble Listener example.
+		bubble.setBubbleOnTapListener(new BubbleOnTapListener() {
+			@Override
+			public void onTap(Bubble.BubblePosition bubblePosition) {
+				Log.d("Debug", "Bubble tapped at:           x - " + bubblePosition.x + " | y - " + bubblePosition.y);
+			}
+
+			@Override
+			public void onTapConfirmed(Bubble.BubblePosition bubblePosition) {
+				Log.d("Debug", "Bubble tapped confirmed at: x - " + bubblePosition.x + " | y - " + bubblePosition.y);
+			}
+
+			@Override
+			public void onDoubleTap(Bubble.BubblePosition bubblePosition) {
+				Log.d("Debug", "Bubble double tapped at:    x - " + bubblePosition.x + " | y - " + bubblePosition.y);
+			}
+		});
+		BubblesManager.getManager().addBubble(bubble);
 	}
 }
