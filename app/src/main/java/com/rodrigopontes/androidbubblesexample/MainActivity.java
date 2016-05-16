@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.rodrigopontes.androidbubbles.Bubble;
-import com.rodrigopontes.androidbubbles.BubbleOnTapListener;
 import com.rodrigopontes.androidbubbles.BubblesManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,17 +30,18 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+	}
+
+	// Action for "Create Bubbles Manager" button
+	public void onCreateBubblesManager(View view) {
+		// Creates a service that wraps the creation of Bubbles Manager.
+		// This is a good approach if you want to keep track of screen orientation changes
+		// while your app is in the background.
 		startService(new Intent(this, ScreenOrientationService.class));
 	}
 
+	// Action for "Add Bubble" button
 	public void onAddBubble(View view) {
-		Bubble bubble = new Bubble(123);
-		bubble.setBubbleOnTapListener(new BubbleOnTapListener() {
-			@Override
-			public void onTap() {
-
-			}
-		});
 		BubblesManager.getManager().addBubble(new Bubble(R.drawable.example_bubble));
 	}
 }

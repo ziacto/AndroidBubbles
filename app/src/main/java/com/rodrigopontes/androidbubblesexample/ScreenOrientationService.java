@@ -21,7 +21,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.IBinder;
+import android.provider.Settings;
 
 import com.rodrigopontes.androidbubbles.BubblesManager;
 
@@ -39,20 +41,46 @@ public class ScreenOrientationService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		if(BubblesManager.exists()) {
-			bubblesManager = BubblesManager.getManager();
-		} else {
-			bubblesManager = BubblesManager.create(getApplicationContext());
-		}
-		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction("android.intent.action.CONFIGURATION_CHANGED");
-		registerReceiver(new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				if(intent.getAction().equals("android.intent.action.CONFIGURATION_CHANGED")) {
-					bubblesManager.updateConfiguration();
+		// If running Android M, ask for drawing permission if necessary
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			if(Settings.canDrawOverlays(getApplicationContext())) {
+				if(BubblesManager.exists()) {
+					bubblesManager = BubblesManager.getManager();
+				} else {
+					bubblesManager = BubblesManager.create(getApplicationContext());
 				}
+				IntentFilter intentFilter = new IntentFilter();
+				intentFilter.addAction("android.intent.action.CONFIGURATION_CHANGED");
+				registerReceiver(new BroadcastReceiver() {
+					@Override
+					public void onReceive(Context context, Intent intent) {
+						if(intent.getAction().equals("android.intent.action.CONFIGURATION_CHANGED")) {
+							bubblesManager.updateConfiguration();
+						}
+					}
+				}, intentFilter);
+			} else {
+				Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent);
+				stopSelf();
 			}
-		}, intentFilter);
+		} else {
+			if(BubblesManager.exists()) {
+				bubblesManager = BubblesManager.getManager();
+			} else {
+				bubblesManager = BubblesManager.create(getApplicationContext());
+			}
+			IntentFilter intentFilter = new IntentFilter();
+			intentFilter.addAction("android.intent.action.CONFIGURATION_CHANGED");
+			registerReceiver(new BroadcastReceiver() {
+				@Override
+				public void onReceive(Context context, Intent intent) {
+					if(intent.getAction().equals("android.intent.action.CONFIGURATION_CHANGED")) {
+						bubblesManager.updateConfiguration();
+					}
+				}
+			}, intentFilter);
+		}
 	}
 }

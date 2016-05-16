@@ -91,6 +91,7 @@ public class BubblesManager {
 		screenHeight = (short)point.y;
 		int statusBarResId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
 		statusBarHeight = (short)context.getResources().getDimensionPixelSize(statusBarResId);
+
 		bubbleTrash = new BubbleTrash();
 		bubbleTrashParams = new WindowManager.LayoutParams(
 				ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -149,7 +150,7 @@ public class BubblesManager {
 					BubblesProperties.SPRING_ANIMATION_LONG_DURATION,
 					bubble).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 		} else {
-			throw new BubblesManagerNotInitializedException();
+			throw new NullPointerException("BubblesManager has not yet been created! Use .create() first.");
 		}
 	}
 
@@ -161,7 +162,7 @@ public class BubblesManager {
 			bubblesList.remove(bubbleController);
 			windowManager.removeViewImmediate(bubbleController.bubble.getFrameLayout());
 		} else {
-			throw new BubblesManagerNotInitializedException();
+			throw new NullPointerException("BubblesManager has not yet been created! Use .create() first.");
 		}
 	}
 
@@ -599,31 +600,28 @@ public class BubblesManager {
 
 		protected int get() {
 			switch(mode) {
-				// Regular static position
-				case 0:
+				case 0: // Regular static position
 					return value;
-				// Dynamic position based on params
-				case 1:
+				case 1: // Dynamic position based on params
 					if(axis == 0) {
 						return params.x;
 					} else {
 						return params.y;
 					}
-					// Dynamic position based on params with offset for use with trash
-				case 2:
+				case 2: // Dynamic position based on params with offset for use with trash
 					if(axis == 0) {
 						return screenWidth / 2 - bubbleTrashWidth / 2 + ((params.x + bubbleWidth / 2) - screenWidth / 2) / 10;
 					} else {
 						return (int)(screenHeight * 0.725f) + params.y / 10;
 					}
-					// Dynamic position based on touch
-				case 3:
+				case 3: // Dynamic position based on touch
 					if(axis == 0) {
 						return initialPos + (int)(event.getRawX() - initialTouchPos);
 					} else {
 						return initialPos + (int)(event.getRawY() - initialTouchPos);
 					}
 			}
+			// Should never get here
 			return -1;
 		}
 	}
@@ -736,13 +734,6 @@ public class BubblesManager {
 
 		public BubblesManagerNotNullException() {
 			super("BubblesManager already exists! Use .getManager() instead.");
-		}
-	}
-
-	private static class BubblesManagerNotInitializedException extends RuntimeException {
-
-		public BubblesManagerNotInitializedException() {
-			super("BubblesManager has not been initialized! Use .initialize() first.");
 		}
 	}
 }
