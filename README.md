@@ -86,8 +86,8 @@ bubblePosition.y
 
 You can also implement
 ```java
-public void onTapConfirmed()
-public void onDoubleTap()
+public void onTapConfirmed(Bubble.BubblePosition)
+public void onDoubleTap(Bubble.BubblePosition)
 ```
 
 ### Remove Bubble
